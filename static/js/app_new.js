@@ -30,8 +30,8 @@ d3.csv('https://raw.githubusercontent.com/jamie-miller-rva/Life-Expectancy_Compa
     var trace = getData(datum.Year, datum.region);
     trace.text.push(datum.region);
     trace.id.push(datum.region);
-    trace.x.push(datum.LifeExp);
-    trace.y.push(datum.gdpPercap);
+    trace.x.push(datum.Life_Exp);
+    trace.y.push(datum.GDP);
     trace.marker.size.push(datum.Population);
   }
 
