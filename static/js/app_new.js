@@ -77,7 +77,7 @@ d3.csv('https://raw.githubusercontent.com/jamie-miller-rva/Life-Expectancy_Compa
       data: regions.map(function (region) {
         return getData(Years[i], region);
       })
-    })
+    });
   }
   
   // Now create slider steps, one for each frame. The slider
@@ -103,8 +103,7 @@ d3.csv('https://raw.githubusercontent.com/jamie-miller-rva/Life-Expectancy_Compa
       range: [30, 85]
     },
     yaxis: {
-      title: 'GDP per Capita',
-      type: 'log'
+      title: 'GDP per Capita'
     },
     hovermode: 'closest',
    // We'll use updatemenus (whose functionality includes menus as
