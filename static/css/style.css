@@ -1,0 +1,6 @@
+/* add styling to include (at a minimum) width for plotly visualization */
+
+#life-expectancy_bubble {
+    width:600px;
+    height:250px
+}
