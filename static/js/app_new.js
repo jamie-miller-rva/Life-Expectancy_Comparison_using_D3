@@ -1,18 +1,19 @@
-// 
-d3.csv('https://raw.githubusercontent.com/jamie-miller-rva/Life-Expectancy_Comparison_using_D3/main/data/Life_Expectancy_Data.csv', function (err, data) {
+// // Import our CSV data with d3's .csv import method.
+
+d3.csv('https://raw.githubusercontent.com/jamie-miller-rva/Life-Expectancy_Comparison_using_D3/main/data/Life_Expectancy_Data.csv').then(function (data) {
     console.log(data);
   // Create a lookup table to sort and regroup the columns of data,
-  // first by Year, then by Country:
+  // first by Year, then by region:
  const lookup = {};
-  function getData(Year, Country) {
+  function getData(Year, region) {
     let byYear, trace;
     if (!(byYear = lookup[Year])) {
       byYear = lookup[Year] = {};
-    };
-   // If a container for this Year + Country doesn't exist yet,
+    }
+   // If a container for this Year + region doesn't exist yet,
    // then create one:
-    if (!(trace = byYear[Country])) {
-      trace = byYear[Country] = {
+    if (!(trace = byYear[region])) {
+      trace = byYear[region] = {
         x: [],
         y: [],
         id: [],
@@ -26,9 +27,9 @@ d3.csv('https://raw.githubusercontent.com/jamie-miller-rva/Life-Expectancy_Compa
   // Go through each row, get the right trace, and append the data:
   for (var i = 0; i < data.length; i++) {
     var datum = data[i];
-    var trace = getData(datum.Year, datum.Country);
-    trace.text.push(datum.Country);
-    trace.id.push(datum.Country);
+    var trace = getData(datum.Year, datum.region);
+    trace.text.push(datum.region);
+    trace.id.push(datum.region);
     trace.x.push(datum.LifeExp);
     trace.y.push(datum.gdpPercap);
     trace.marker.size.push(datum.Population);
@@ -36,22 +37,22 @@ d3.csv('https://raw.githubusercontent.com/jamie-miller-rva/Life-Expectancy_Compa
 
   // Get the group names:
   var Years = Object.keys(lookup);
-  // In this case, every Year includes every Country, so we
-  // can just infer the Countrys from the *first* Year:
+  // In this case, every Year includes every region, so we
+  // can just infer the regions from the *first* Year:
   var firstYear = lookup[Years[0]];
-  var Countrys = Object.keys(firstYear);
+  var regions = Object.keys(firstYear);
 
-  // Create the main traces, one for each Country:
+  // Create the main traces, one for each region:
   var traces = [];
-  for (i = 0; i < Countrys.length; i++) {
-    var data = firstYear[Countrys[i]];
+  for (i = 0; i < regions.length; i++) {
+    var data = firstYear[regions[i]];
    // One small note. We're creating a single trace here, to which
    // the frames will pass data for the different Years. It's
    // subtle, but to avoid data reference problems, we'll slice 
    // the arrays to ensure we never write any new data into our
    // lookup table:
     traces.push({
-      name: Countrys[i],
+      name: regions[i],
       x: data.x.slice(),
       y: data.y.slice(),
       id: data.id.slice(),
@@ -73,8 +74,8 @@ d3.csv('https://raw.githubusercontent.com/jamie-miller-rva/Life-Expectancy_Compa
   for (i = 0; i < Years.length; i++) {
     frames.push({
       name: Years[i],
-      data: Countrys.map(function (Country) {
-        return getData(Years[i], Country);
+      data: regions.map(function (region) {
+        return getData(Years[i], region);
       })
     })
   }
@@ -156,7 +157,7 @@ d3.csv('https://raw.githubusercontent.com/jamie-miller-rva/Life-Expectancy_Compa
   };
   
   // Create the plot:
-  Plotly.plot('myDiv', {
+  Plotly.newPlot('life-expectancy_bubble', {
     data: traces,
     layout: layout,
    config: {showSendToCloud:true},
