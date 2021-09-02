@@ -1,6 +1,6 @@
 // // Import our CSV data with d3's .csv import method.
 
-d3.csv('https://raw.githubusercontent.com/jamie-miller-rva/Life-Expectancy_Comparison_using_D3/main/data/Life_Expectancy_Data.csv').then(function (data) {
+d3.csv('https://raw.githubusercontent.com/jamie-miller-rva/Life-Expectancy_Comparison_using_D3/main/data/life_Exp.csv').then(function (data) {
     console.log(data);
   // Create a lookup table to sort and regroup the columns of data,
   // first by Year, then by region:
