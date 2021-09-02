@@ -1,14 +1,14 @@
 // 
-Plotly.d3.csv('./data/Life_Expectancy_Data.csv', function (err, data) {
+d3.csv('https://raw.githubusercontent.com/jamie-miller-rva/Life-Expectancy_Comparison_using_D3/main/data/Life_Expectancy_Data.csv', function (err, data) {
     console.log(data);
   // Create a lookup table to sort and regroup the columns of data,
   // first by Year, then by Country:
  const lookup = {};
   function getData(Year, Country) {
     let byYear, trace;
-    if (!(byYear = lookup[Year])) {;
+    if (!(byYear = lookup[Year])) {
       byYear = lookup[Year] = {};
-    }
+    };
    // If a container for this Year + Country doesn't exist yet,
    // then create one:
     if (!(trace = byYear[Country])) {
@@ -27,11 +27,11 @@ Plotly.d3.csv('./data/Life_Expectancy_Data.csv', function (err, data) {
   for (var i = 0; i < data.length; i++) {
     var datum = data[i];
     var trace = getData(datum.Year, datum.Country);
-    trace.text.push(datum.country);
-    trace.id.push(datum.country);
-    trace.x.push(datum.lifeExp);
+    trace.text.push(datum.Country);
+    trace.id.push(datum.Country);
+    trace.x.push(datum.LifeExp);
     trace.y.push(datum.gdpPercap);
-    trace.marker.size.push(datum.pop);
+    trace.marker.size.push(datum.Population);
   }
 
   // Get the group names:
